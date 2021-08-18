@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_17_134922) do
+ActiveRecord::Schema.define(version: 2021_08_18_120559) do
 
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(version: 2021_08_17_134922) do
     t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "cart_id", null: false
     t.integer "item_id", null: false
     t.integer "order_id", null: false
+    t.integer "cart_id"
     t.index ["cart_id"], name: "index_line_items_on_cart_id"
     t.index ["item_id"], name: "index_line_items_on_item_id"
     t.index ["order_id"], name: "index_line_items_on_order_id"
@@ -67,12 +67,16 @@ ActiveRecord::Schema.define(version: 2021_08_17_134922) do
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "username"
-    t.string "email", null: false
-    t.string "pass", limit: 8, null: false
     t.boolean "is_Admin", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_users_on_email"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "carts", "users"
