@@ -4,7 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
     has_one :cart
-
     email_valid = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
     validates :email, presence: true, format: { with: email_valid }, uniqueness: {case_sensitive: false}
