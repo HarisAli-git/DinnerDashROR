@@ -4,6 +4,7 @@
     <%= form.text_field :name %>
     <% article.errors.full_messages_for(:name).each do |message| %>
       <div><%= message %></div>
+      <%= form.file_field :avatar %>
     <% end %>
   </div>
 
