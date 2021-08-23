@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<div class="jumbotron">
+  <h1 class="display-4">  
+  <strong>
+  <%= @user.name %>
+  </strong>
+</h1>
+  <p class="lead">
+  <%= @item.username %>
+  </p>
+  <hr class="my-4">
+    <%= @user.email %>
+  <p>
+    <%= link_to 'Edit Profile',  edit_user_registration, class: "btn btn-primary btn-lg", role: "button" %>
+  </div>
+</div>
+
+
