@@ -9,5 +9,4 @@ class User < ApplicationRecord
     validates :email, presence: true, format: { with: email_valid }, uniqueness: {case_sensitive: false}
     validates :name, presence: true
     validates :username, length: {in: 2..32}
-    validates :pass, presence: true, length: {minimum: 6, maximum: 8}
 end

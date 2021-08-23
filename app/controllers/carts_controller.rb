@@ -1,40 +1,28 @@
 class CartsController < ApplicationController
-    def index
-    end
+  def index
+    @cart_items = session[:cart]
+    @line_items = {}
+    @tot_items = 0
+    @cart_items.each do |item_id, quantity|
+        item = Item.find_by(id: item_id)
+        @line_items[item_id] = {item: item, quantity: quantity}
+        check_status(item, quantity, item_id)
+    end unless session[:cart].nil?
+    @current_order.line_items = @line_items
+    session[:order]["items"] = @line_items
+  end
 
-    def show
-        @cart = Cart.find(params[:id])
-    end
+  def destroy
+    item_id = params[:id]
+    @cart.cart_data.delete(item_id)
+    redirect_to carts_path
+  end
 
-    def create
-      @cart = Cart.new(cart_params)
-    
-      if @cart.save
-        redirect_to @cart
-      else
-        render :new
-      end
+  def check_status(item, qty, item_id)
+    if item.flag == true
+        @tot_items = @tot_items + @qty * item.price
+    else
+        @line_items.delete(item_id)
     end
-
-    def update
-      @cart = Cart.find(params[:id])
-
-      if @cart.update(cart_params)
-        redirect_to @cart
-      else
-        render :edit
-      end
-    end
-    
-    def destroy
-      @cart = Cart.find(params[:id])
-      @cart.destroy
-
-      redirect_to root_path
-    end
-
-    private
-    def cart_params
-      params.require(:cart).permit(:user_id)
-    end
+  end
 end

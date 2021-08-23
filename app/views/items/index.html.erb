@@ -1,11 +1,45 @@
-<h1>Items</h1>
+<div id="cont">
+<h1 class="display-2", style="flex-direction:column; margin: 5px">Items List<h1>
+<% if policy(@items).new?%>
+  <%= link_to 'New Item', new_item_path, class:"btn btn-primary btn-lg", style:"flex-direction:column; margin-top: 20px; margin-left: 50px" %>
+<%end%>
+</div>
+<% @items.each do |item| %>
+<div id="cont">
+<div class="card" style="width: 18rem; flex-direction:column; margin: 5px">
+   <p> 
+    <%= image_tag(item.avatar, id:"img1")%>
+    </p>  
+  <div class="card-body">
+    <h5 class="card-title"><%= item.title %></h5>
+    <p class="card-text"><%= item.description %></p>
+    <p><strong><%= item.price %></strong></p>
+    <div class="btn-group" role="group">
+      <%= link_to 'View', item, class:"btn btn-secondary btn-sm" %>
+      <% if policy(item).destroy?%>
+        <%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-secondary btn-sm" %>
+      <%end%>
+    </div>
+    <a href="#" class="btn btn-secondary">Add to Cart</a>
+  </div>
+</div>
+<% end %>
+</div>
 
-<ul>
-  <% @items.each do |item| %>
-    <li>
-      <%= link_to item.title, item %>
-    </li>
-  <% end %>
-</ul>
+<style>
+#img1{
+padding-top: 5px;
+padding-left: 5px;
+height: 220px;
+width: 280px;
+}
 
-<%= render "form", item: @item%>
+#cont{
+  display: flex;
+}
+
+.butt {
+  text-decoration: none;
+  color: black;
+}
+</style>

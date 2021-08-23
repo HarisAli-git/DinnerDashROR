@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   get 'users/index'
   get 'users/show'
-  devise_for :users
+  devise_for :users, :controller => {registrations: "devise/registrations"}
   get 'home/about'
   root 'home#index'
-  get 'items/index'
+  resources :items
+  resources :categories
+  get 'admins/index'  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -1,0 +1,18 @@
+<%if user_signed_in?%>
+  <%if @user.is_Admin%>
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action active">
+        Admins Actions
+      </div>
+      <a href="#" class="list-group-item list-group-item-action">Manage categories</a>
+        <%= link_to 'Manage Items', items_path, class: "list-group-item list-group-item-action" %>
+      <a href="#" class="list-group-item list-group-item-action">View all Oders of the Users</a>
+      <a href="#" class="list-group-item list-group-item-action">View all Users</a>
+      <a href="#" class="list-group-item list-group-item-action">Change Password</a>
+    </div>
+  <%else%>
+    <div>
+      User is not an admin
+    </div>
+  <%end%>
+<%end%>

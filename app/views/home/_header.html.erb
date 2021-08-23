@@ -1,31 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: #e3f2fd;">
   <div class="container-fluid">
-  <%= link_to 'HomePage', root_path, class: "navbar-brand" %>
+  <%= link_to 'Home', root_path, class: "navbar-brand" %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <%= link_to 'About the App', home_about_path, class: "nav-link" %>
+        <%= link_to 'About', home_about_path, class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to 'Sign in', new_user_session_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Edit Profile Details', edit_user_registration_path, class: "nav-link" %>
-      </li>  
+        <%= link_to 'Items', items_path, class: "nav-link" %>
+      </li> 
       </ul>
+
+      <%if user_signed_in?%>
       <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <div class="btn-group" role="group">
+          <%= link_to 'Sign in', new_user_session_path, class: "btn btn-outline-success btn-sm" %>
+          <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-outline-success btn-sm" %>
+          <%= link_to 'Edit Profile', edit_user_registration_path, class: "btn btn-outline-success btn-sm" %>
+      </div>
       </form>
+      <%else%>
+          <%= link_to 'Sign in', new_user_session_path, class: "btn btn-outline-success btn-sm" %>
+      <%end%>
     </div>
   </div>
 </nav>

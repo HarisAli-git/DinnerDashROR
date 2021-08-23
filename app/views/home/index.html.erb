@@ -1,2 +1,16 @@
-<h1>Dinner Dash</h1>
-<p>Hungry?</p>
+<div class="jumbotron">
+  <h1 class="display-4">Dinner Dash!</h1>
+  <p class="lead">Your hunger cravings, Just one click away!</p>
+  <hr class="my-4">
+    <%= image_tag('restaurant.jpg', draggable: "true", id: "drag1")%>
+  <p>Get Registered and statisfy your cravings now!</p>
+    <%= link_to 'Sign in \ Register', new_user_session_path, class: "btn btn-primary btn-lg", role: "button" %>
+</div>
+
+<style>
+#drag1 {
+  margin-bottom: 10px;
+  height: 270px;
+  width: 600px; 
+}
+</style>

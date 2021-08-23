@@ -13,6 +13,7 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
+    authorize @item
 
     if @item.save
       redirect_to @item
@@ -27,7 +28,7 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-
+    authorize @item
     if @item.update(item_params)
       redirect_to @item
     else
@@ -37,8 +38,8 @@ class ItemsController < ApplicationController
 
   def destroy
     @item = Item.find(params[:id])
+    authorize @item
     @item.destroy
-
     redirect_to root_path
   end
 
