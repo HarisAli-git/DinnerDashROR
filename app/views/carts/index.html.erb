@@ -1,30 +1,63 @@
-<h1>Members List</h1>
-<table class="table table-striped table-hover table-bordered">
-  <thead class="table-dark">
-    <tr>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div>
+    <%= link_to 'Keep Shopping', items_path, class: 'btn btn-secondary'%>
+</div>
 
-  <tbody>
-    <% @items.each do |item| %>
-      <tr>
-        <td><%= member.first_name %></td>
-        <td><%= member.last_name %></td>
-        <td><%= member.email %></td>
-        <td><%= member.phone %></td>
-        <td><%= link_to 'Show', member %></td>
-        <td><%= link_to 'Edit', edit_member_path(member) %></td>
-        <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<p id="notice"><%= notice %></p>
 
-<br>
+<div class="jumbotron">
+  <h1 class="display-4">  
+  <strong>
+  </strong>
+</h1>
 
-<%= link_to 'New Member', new_member_path, class:"btn btn-dark" %>
+<% @ordered_items.each do |index, details| %>
+      <% item_id = details[:item][:id] %>
+        <tr>
+          <td><%= index %></td>
+          <td <%= item_id %>"><%= details[:item]['name'] %></td>
+          <td <%= item_id %>"><%= details[:item]['description'] %></td>
+          <td <%= item_id %>">
+          <%=form_for 'quantity', :url => {:controller => 'cart_items', :action => 'update', item_id: details[:item][:id], id: index }, method: :patch  do |f| %>
+            <%= f.number_field details[:qty], :min => 1, :value => details[:qty], :class => "qty qty-editable-width", "data-message" => item_id %>
+            <% end %>
+          </td>
+            <td id="item_unit_price_<%= item_id %>"><%= details[:item]['price'] %></td>
+          <td>N<span class="line-total" id="item_sub_total_<%= details[:item][:id] %>" data-message="<%= details[:item]['price'] %>" ><%= details[:item]['price'].to_i * details[:qty].to_i %></span></td>
+          <td>
+          </td>
+        </tr>
+      </tbody>
+      <% end %>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>N<%= @total%></td>
+        </tr>
+      </tfoot>
+    </table>
+
+<section class="">
+    <%= link_to 'Empty Cart', method: :delete%>
+</section>
+
+  
+<div class="keep-shopping pv1 mt4 has-text-right">
+  <%= link_to 'Keep Shopping', items_path, class: 'button is-warning' %>
+</div>
+<hr />
+<section class="section">
+
+  <div class="columns">
+    <div class="column">
+      <%= button_to 'Empty Cart', @cart, method: :delete, data: { confirm: "Are you sure? " }, class: "button is-danger" %>
+    </div>
+    <div class="column total has-text-right">
+      <h4 class="title is-4">
+        <span class="f5 has-text-grey">Total:</span>
+      </h4>
+    </div>
+  </div>
+</section>

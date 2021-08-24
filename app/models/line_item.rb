@@ -6,4 +6,8 @@ class LineItem < ApplicationRecord
     validates :quantity, presence: true
     validates :item_id, presence: true
     validates :order_id, presence: true
+
+    def total_price
+        item.price.to_i * quantity.to_i
+    end
 end

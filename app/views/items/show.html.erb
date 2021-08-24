@@ -2,9 +2,6 @@
 
 <div class="jumbotron">
   <h1 class="display-4">  
-  <strong>
-  <%= @category.name %>
-  </strong>
 </h1>
   <p class="lead">
   <%= @item.description %>
@@ -15,13 +12,16 @@
   <strong>Only for:</strong>
   <%= @item.price %> PKR 
   </p>
+  <p><strong>
+  <%= @item.categories[0].name %>
+  </strong></p>
   <div class="btn-group" role="group">
     <%if policy(@item).edit?%>
       <%= link_to 'Edit', edit_item_path(@item), class:"btn btn-secondary btn-sm" %>
     <%end%>  
       <%= link_to 'More items', items_path, class: "btn btn-secondary btn-sm", role: "button" %>
   </div>
-      <%= link_to 'Add to Cart', new_user_session_path, class: "btn btn-primary btn-lg", role: "button" %>
+      <%= button_to 'Add to Cart', cart_items_path(item_id: @item.id), class: "btn btn-primary btn-lg", role: "button" %>
   </div>
 </div>
 

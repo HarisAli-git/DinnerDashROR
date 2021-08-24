@@ -15,6 +15,10 @@
   </div>
 
   <div>
+  <%= form.collection_select(:category_ids, categories, :id, :name, {}, { :class => "select_box", :style => "display:block;" }) %>
+  </div>
+
+  <div>
   <%= form.file_field :avatar %>
   </div>
 

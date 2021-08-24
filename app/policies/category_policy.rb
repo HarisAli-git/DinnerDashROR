@@ -15,6 +15,10 @@ class CategoryPolicy < ApplicationPolicy
     user.is_Admin?
   end
 
+  def destroy?
+    user.is_Admin?
+  end
+
   class Scope < Scope
     def resolve
       scope.all

@@ -1,21 +1,29 @@
 class ItemsController < ApplicationController
+  before_action :set_select_collections, only: [:edit, :update, :new, :create]
+
   def index
     @items = Item.all
+    @categories = Category.all
   end
 
   def show
     @item = Item.find(params[:id])
+    @categories = Category.all
   end
 
   def new
     @item = Item.new
+    @categories = Category.all
   end
 
   def create
     @item = Item.new(item_params)
+    
     authorize @item
-
     if @item.save
+      @item_category = ItemCategory.new(item_id: @item.id, category_id: params[:item][:category_ids])
+      @item_category.save
+      @categories = Category.all
       redirect_to @item
     else
       render :new
@@ -40,11 +48,15 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     authorize @item
     @item.destroy
-    redirect_to root_path
+    redirect_to items_path
   end
 
   private
     def item_params
       params.require(:item).permit(:title, :description, :price, :avatar)
+    end
+
+    def set_select_collections
+      @categories = Category.all
     end
 end

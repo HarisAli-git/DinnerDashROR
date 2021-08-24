@@ -1,13 +1,7 @@
-<h1 class="display-2", style="flex-direction:column; margin: 5px">Items List</h1>
-<%if user_signed_in?%>
-  <% if policy(@items).new?%>
-    <%= link_to 'New Item', new_item_path, class:"btn btn-primary btn-lg, margin-top: 20px; margin-left: 50px" %>
-  <%end%>
-<%end%>
-<br>
-<br>
+<h1>Items in Categories List</h1>
+
 <div class="card-columns". style="display:flex">
-<% @items.each do |item| %>
+<% items.each do |item| %>
 <div class="card mb-3" style="width: 18rem;flex-direction:column;flex-shrink:none">
    <p> 
     <%= image_tag(item.avatar, :class=> "card-img-top", :src=> ".../100px160/", :alt=> "Card image cap")%>
@@ -19,10 +13,10 @@
     <div class="btn-group" role="group">
       <%= link_to 'View', item, class:"btn btn-secondary btn-sm" %>
       <%if user_signed_in?%>
-      <% if policy(item).destroy?%>
-        <%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-secondary btn-sm" %>
-      <%end%>
-      <%end%>
+        <% if policy(item).destroy?%>
+            <%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-secondary btn-sm" %>
+        <%end%>
+    <%end%>
     </div>
       <%= button_to 'Add to Cart', cart_items_path(item_id: item.id), class:"btn btn-secondary" %>
   </div>
