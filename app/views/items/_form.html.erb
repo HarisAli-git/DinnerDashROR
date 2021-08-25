@@ -6,12 +6,16 @@
 
   <div>
     <%= form.label :price %><br>
-    <%= form.text_area :price %><br>
+    <%= form.number_field :price %><br>
   </div>
 
   <div>
     <%= form.label :description %><br>
     <%= form.text_area :description %><br>
+  </div>
+
+  <div>
+  <%= form.collection_select(:category_ids, categories, :id, :name, {}, { :class => "select_box", :style => "display:block;" }) %>
   </div>
 
   <div>

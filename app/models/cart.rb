@@ -1,4 +1,5 @@
 class Cart < ApplicationRecord
+    attr_reader :cart_data
     belongs_to :user
 
     has_many :line_items
@@ -6,17 +7,24 @@ class Cart < ApplicationRecord
 
     validates :user_id, presence: true
 
-    def add_items(items_params)
-        current_item = cart_items.find_by(item_id: product_params[:item][:item_id])
-        if current_item
-          current_item.quantity += product_params[:product][:quantity].to_i
-        current_item.save
-        else
-        new_item = cart_items.create(product_id: product_params[:product][:product_id],
-          quantity: product_params[:product][:quantity],
-          cart_id: self.id)
+    belongs_to :user
+    has_many :line_items
+    has_many :items, through: :line_items
+    
+    def sub_total
+        sum=0
+        line_items.each do |item|
+            sum += item.total_price
         end
-       new_item
+        sum
     end
 
+    def initialize(cart_data)
+      @cart_data = cart_data || {}
+    end
+
+    def increment(item_id)
+      @cart_data[item_id] ||= 0
+      @cart_data[item_id] += 1
+    end
 end

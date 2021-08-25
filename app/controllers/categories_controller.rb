@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
 
     def show
         @category = Category.find(params[:id])
+        @items = @category.items
     end
 
     def new
@@ -24,6 +25,7 @@ class CategoriesController < ApplicationController
 
     def edit
     @category = Category.find(params[:id])
+    authorize @category
     end
 
     def update
