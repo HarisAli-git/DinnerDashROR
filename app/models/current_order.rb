@@ -27,8 +27,6 @@ class CurrentOrder
         @line_item = LineItem.new(item_id: details['item']['id'], quantity: details['quantity'],
                                   order_id: new_order.id)
 
-       
-
         @line_item.save
         new_order.line_items.push(@line_item)
       end
