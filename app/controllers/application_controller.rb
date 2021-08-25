@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   
   def current_cart
-    @current_cart ||= Cart.new(session[:cart_id])
+    @current_cart ||= Cart.new(session[:cart])
   end
 
   def load_cart

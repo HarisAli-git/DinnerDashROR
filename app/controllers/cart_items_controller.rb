@@ -17,7 +17,7 @@ class CartItemsController < ApplicationController
     item_id = cart[:item_id]
     quantity = cart[:quantity]
     session[:cart][item_id] = quantity.to_i
-    session[:order]["items"][item_id]["qty"] = quantity.to_i
+    session[:order]["items"][item_id]["quantity"] = quantity.to_i
         session[:order]["details"] = order_params
     render json: {data: item_id}
   end

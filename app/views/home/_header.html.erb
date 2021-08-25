@@ -17,10 +17,11 @@
       </li> 
       </ul>
 
+      <%= link_to 'View Cart', carts_path, class: "btn btn-primary"%>
       <%if user_signed_in?%>
+      
       <form class="d-flex">
       <div class="btn-group" role="group">
-          <%= link_to 'Sign in', new_user_session_path, class: "btn btn-outline-success btn-sm" %>
           <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-outline-success btn-sm" %>
           <%= link_to 'Edit Profile', edit_user_registration_path, class: "btn btn-outline-success btn-sm" %>
       </div>

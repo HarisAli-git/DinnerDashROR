@@ -3,14 +3,20 @@ class CartsController < ApplicationController
 
   def index
     @cart_items = session[:cart]
-    @ordered_items = {}
+    @line_items = {}
     @total = 0
-    @cart_items.each do |item_id, qty|
+    unless session[:cart].nil?
+      @cart_items.each do |item_id, quantity|
         item = Item.find_by(id: item_id)
-        @ordered_items[item_id] = {item: item, qty: qty}
-        check_status(item, qty, item_id)
-    end unless session[:cart].nil?
-    session[:order]["items"] = @ordered_items
+        @line_items[item_id] = {item: item, quantity: quantity}
+        if item.flag == true
+            @total = @total + (quantity * item.price)
+        else
+            @line_items.delete(item_id)
+        end
+    end 
+  end
+    session[:order]["items"] = @line_items
   end
 
   def destroy
@@ -19,24 +25,16 @@ class CartsController < ApplicationController
       redirect_to carts_path
   end
 
-  def check_status(item, qty, item_id)
-      if item.flag == true
-          @total += qty * item.price
-      else
-          @ordered_items.delete(item_id)
-      end
-  end
-
   def show
-    @cart = current_cart
+    @cart = cart
   end
 
   def add_to_cart
-    current_cart.add_item(params[:item_id])
+    cart.add_item(params[:item_id])
   end
 
   def new
-    @carts = current_cart
+    @carts = cart
   end
 
   def create

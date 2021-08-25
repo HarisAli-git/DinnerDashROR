@@ -4,60 +4,55 @@
 
 <p id="notice"><%= notice %></p>
 
+
+<% if @line_items.length == 0 %>
+  <p class="alert alert-warning">Your Cart is Empty!</p>
+<% else %>
+
 <div class="jumbotron">
   <h1 class="display-4">  
-  <strong>
+  <strong>Cart
   </strong>
 </h1>
 
-<% @ordered_items.each do |index, details| %>
-      <% item_id = details[:item][:id] %>
-        <tr>
-          <td><%= index %></td>
-          <td <%= item_id %>"><%= details[:item]['name'] %></td>
-          <td <%= item_id %>"><%= details[:item]['description'] %></td>
-          <td <%= item_id %>">
-          <%=form_for 'quantity', :url => {:controller => 'cart_items', :action => 'update', item_id: details[:item][:id], id: index }, method: :patch  do |f| %>
-            <%= f.number_field details[:qty], :min => 1, :value => details[:qty], :class => "qty qty-editable-width", "data-message" => item_id %>
-            <% end %>
-          </td>
-            <td id="item_unit_price_<%= item_id %>"><%= details[:item]['price'] %></td>
-          <td>N<span class="line-total" id="item_sub_total_<%= details[:item][:id] %>" data-message="<%= details[:item]['price'] %>" ><%= details[:item]['price'].to_i * details[:qty].to_i %></span></td>
-          <td>
-          </td>
-        </tr>
-      </tbody>
-      <% end %>
-      <tfoot>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>N<%= @total%></td>
-        </tr>
-      </tfoot>
-    </table>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">quantity</th>
+    </tr>
+  </thead>
+  <% @line_items.each do |index, details| %>
+  <tbody>
+    <tr>
+        <% item_id = details[:item][:id] %>
+      <td><%= details[:item]['title'] %></td>
+      <td><%= details[:item]['price'] %></td>
+      <td>
+        <%=form_for 'quantity', :url => {:controller => 'cart_items', :action => 'update', item_id: details[:item][:id], id: index }, method: :patch  do |form| %>
+        <%= form.number_field details[:quantity], :min => 1, :value => details[:quantity], :class => "qty qty-editable-width", "data-message" => item_id %>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
 
-<section class="">
-    <%= link_to 'Empty Cart', method: :delete%>
-</section>
+  <%end%>
+</table>
 
-  
-<div class="keep-shopping pv1 mt4 has-text-right">
-  <%= link_to 'Keep Shopping', items_path, class: 'button is-warning' %>
-</div>
-<hr />
+
 <section class="section">
 
   <div class="columns">
     <div class="column">
-      <%= button_to 'Empty Cart', @cart, method: :delete, data: { confirm: "Are you sure? " }, class: "button is-danger" %>
+      <%= button_to 'Empty Cart', @cart, method: :delete, data: { confirm: "Are you sure? " }, class: "btn btn-secondary" %>
     </div>
     <div class="column total has-text-right">
+    <br >
       <h4 class="title is-4">
         <span class="f5 has-text-grey">Total:</span>
       </h4>
     </div>
   </div>
 </section>
+<%end%>
