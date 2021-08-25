@@ -1,22 +1,37 @@
 
 <div class="jumbotron">
   <h1 class="display-4">  
-  <strong>Cart
+  <strong>Orders
   </strong>
 </h1>
 
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">User</th>
+      <th scope="col">Sr. #</th>
+      <th scope="col">User id</th>
+      <th scope="col">Status</th>
+      <th scope="col">View order</th>
+      <th scope="col">Change Status</th>
     </tr>
   </thead>
+  <%@no = 1%>
   <% @orders.each do |order| %>
   <tbody>
     <tr>
+      <td><%= @no %></td> 
       <td><%= order.user_id %></td>
+      <td>
+        <% if order.status %>
+          Order Pending
+        <%else%>
+          Order Completed
+        <%end%>
+      </td>
+      <td><%= link_to 'Show',  order, class: "btn btn-info nt-3"%></td>
+      <td><%= link_to 'Edit',  edit_order_path(order), class: "btn btn-warning nt-3"%></td>
     </tr>
   </tbody>
-
+  <%@no += 1%>
   <%end%>
 </table>

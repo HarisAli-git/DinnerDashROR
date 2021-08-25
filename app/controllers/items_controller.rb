@@ -34,12 +34,15 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
+    @categories = Category.all
   end
 
   def update
     @item = Item.find(params[:id])
     authorize @item
     if @item.update(item_params)
+      @item_categories = @item.item_categories
+      @item_categories.update(category_id: params[:item][:category_ids])
       redirect_to @item
     else
       render :edit

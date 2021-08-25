@@ -18,12 +18,14 @@
       <th scope="col">quantity</th>
     </tr>
   </thead>
+  <%@current_order.total = 0 %>
   <% @current_order.line_items.each do |index, cart_item| %>
   <tbody>
     <tr>
       <td><%= cart_item['item']['title'] %></td>
       <td><%= cart_item['item']['price'] %></td>
-      <td><%= cart_item['item']['quantity']%></td>
+      <td><%= cart_item['quantity']%></td>
+      <% @current_order.total += cart_item['item']['price'] * cart_item['quantity']%>
     </tr>
   </tbody>
 
@@ -43,7 +45,7 @@
     <div class="column total has-text-right">
     <br >
       <h4 class="title is-4">
-        <span class="f5 has-text-grey">Total: <%=@current_order.total%> <span class="badge bg-warning">PKR</span> </span>
+        <span class="f5 has-text-grey">Total: <%= @current_order.total %> <span class="badge bg-warning">PKR</span> </span>
       </h4>
     </div>
   </div>

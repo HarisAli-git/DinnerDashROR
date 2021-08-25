@@ -11,6 +11,10 @@ class ItemPolicy < ApplicationPolicy
     user.is_Admin?
   end
 
+  def update?
+    user.is_Admin?
+  end
+
   def destroy?
     user.is_Admin?
   end

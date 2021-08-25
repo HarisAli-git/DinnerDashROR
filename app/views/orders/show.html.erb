@@ -1,0 +1,27 @@
+
+<div class="jumbotron">
+  <h1 class="display-4">  
+  <strong>Orders
+  </strong>
+</h1>
+
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Sr. #</th>
+      <th scope="col">Item id</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <%@no = 1%>
+  <% @line_items.each do |line_item| %>
+  <tbody>
+    <tr>
+      <td><%= @no %></td> 
+      <td><%= line_item.item_id %></td>
+      <td><%= line_item.quantity %></td>
+    </tr>
+  </tbody>
+  <%@no += 1%>
+  <%end%>
+</table>

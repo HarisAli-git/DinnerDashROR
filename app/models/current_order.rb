@@ -6,7 +6,7 @@ class CurrentOrder
   def initialize(current_order)
     @line_items = current_order['items'] || {}
     current_order['details'] ||= {}
-    @total = current_order['details']['total'].to_i || 0
+    @total = current_order['total'].to_i || 0
     @user = {}
     @status = false
   end
@@ -21,17 +21,14 @@ class CurrentOrder
     user = current_user
     new_order = user.orders.new(status: @status, total: @total)
     succ = new_order.save
-    
+
     if succ
       @line_items.each do |_index, details|
-        
         @line_item = LineItem.new(item_id: details['item']['id'], quantity: details['quantity'],
                                   order_id: new_order.id)
-    
-        puts 'order'*100
-        puts @line_item.inspect
-        puts 'order'*100
-    
+
+       
+
         @line_item.save
         new_order.line_items.push(@line_item)
       end

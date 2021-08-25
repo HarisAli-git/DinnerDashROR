@@ -15,7 +15,7 @@
   </div>
 
   <div>
-  <%= form.collection_select(:category_ids, categories, :id, :name, {}, { :class => "select_box", :style => "display:block;" }) %>
+  <%= form.collection_select(:category_ids, @categories, :id, :name, {}, { :class => "select_box", :style => "display:block;" }) %>
   </div>
 
   <div>
