@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :set_cart, only: %i[show edit update destroy]
 
   def index
     @cart_items = session[:cart]
@@ -8,21 +10,21 @@ class CartsController < ApplicationController
     unless session[:cart].nil?
       @cart_items.each do |item_id, quantity|
         item = Item.find_by(id: item_id)
-        @line_items[item_id] = {item: item, quantity: quantity}
+        @line_items[item_id] = { item: item, quantity: quantity }
         if item.flag == true
-            @total = @total + (quantity * item.price)
+          @total += (quantity * item.price)
         else
-            @line_items.delete(item_id)
+          @line_items.delete(item_id)
         end
-    end 
-  end
-    session[:order]["items"] = @line_items
+      end
+    end
+    session[:order]['items'] = @line_items
   end
 
   def destroy
-      item_id = params[:id]
-      @cart.cart_data.delete(item_id)
-      redirect_to carts_path
+    item_id = params[:id]
+    @cart.cart_data.delete(item_id)
+    redirect_to carts_path
   end
 
   def show
@@ -65,10 +67,11 @@ class CartsController < ApplicationController
 
   def invalid_cart
     logger.error "Attempt to access illegal cart #{params[:id]}"
-    redirect_to root_path, notice: "Invalid Cart Access"
+    redirect_to root_path, notice: 'Invalid Cart Access'
   end
 
   private
+
   def set_cart
     @cart = Cart.find(params[:id])
   end
@@ -76,5 +79,4 @@ class CartsController < ApplicationController
   def cart_params
     params.fetch(:cart, {})
   end
-
 end

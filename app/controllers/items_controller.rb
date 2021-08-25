@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ItemsController < ApplicationController
-  before_action :set_select_collections, only: [:edit, :update, :new, :create]
+  before_action :set_select_collections, only: %i[edit update new create]
 
   def index
     @items = Item.all
@@ -18,7 +20,7 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    
+
     authorize @item
     if @item.save
       @item_category = ItemCategory.new(item_id: @item.id, category_id: params[:item][:category_ids])
@@ -52,11 +54,12 @@ class ItemsController < ApplicationController
   end
 
   private
-    def item_params
-      params.require(:item).permit(:title, :description, :price, :avatar)
-    end
 
-    def set_select_collections
-      @categories = Category.all
-    end
+  def item_params
+    params.require(:item).permit(:title, :description, :price, :avatar)
+  end
+
+  def set_select_collections
+    @categories = Category.all
+  end
 end

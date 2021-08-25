@@ -20,6 +20,7 @@ class ItemPolicy < ApplicationPolicy
       @user = user
       @scope = scope
     end
+
     def resolve
       if user.is_Admin?
         scope.all
@@ -27,7 +28,9 @@ class ItemPolicy < ApplicationPolicy
         scope.where(flag: true)
       end
     end
+
     private
+
     attr_reader :user, :scope
   end
 end

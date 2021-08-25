@@ -1,52 +1,55 @@
+# frozen_string_literal: true
+
 class CategoriesController < ApplicationController
-    def index
-        @category = Category.all
+  def index
+    @category = Category.all
+  end
+
+  def show
+    @category = Category.find(params[:id])
+    @items = @category.items
+  end
+
+  def new
+    @category = Category.new
+  end
+
+  def create
+    @category = Category.new(cat_params)
+    authorize @category
+
+    if @category.save
+      redirect_to @category
+    else
+      render :new
     end
+  end
 
-    def show
-        @category = Category.find(params[:id])
-        @items = @category.items
-    end
-
-    def new
-        @category = Category.new
-    end
-
-    def create
-        @category = Category.new(cat_params)
-        authorize @category
-
-        if @category.save
-            redirect_to @category
-        else
-            render :new
-        end
-    end
-
-    def edit
+  def edit
     @category = Category.find(params[:id])
     authorize @category
-    end
+  end
 
-    def update
+  def update
     @category = Category.find(params[:id])
     authorize @category
     if @category.update(cat_params)
-        redirect_to @category
+      redirect_to @category
     else
-        render :edit
+      render :edit
     end
-    end
+  end
 
-    def destroy
+  def destroy
     @category = Category.find(params[:id])
     authorize @category
     @category.destroy
     redirect_to root_path
-    end
+  end
 
-    private
-    def cat_params
-        params.require(:category).permit(:name)
-    end
+  private
+
+  def cat_params
+    params.require(:category).permit(:name)
+  end
 end

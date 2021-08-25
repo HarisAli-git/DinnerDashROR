@@ -1,5 +1,7 @@
-class Order < ApplicationRecord
-    has_many :line_items
+# frozen_string_literal: true
 
-    validates :status, presence: true
+class Order < ApplicationRecord
+  has_many :line_items, dependent: :destroy
+  belongs_to :user
+  validates :status, presence: true
 end

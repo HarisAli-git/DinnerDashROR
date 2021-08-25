@@ -1,0 +1,22 @@
+
+<div class="jumbotron">
+  <h1 class="display-4">  
+  <strong>Cart
+  </strong>
+</h1>
+
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User</th>
+    </tr>
+  </thead>
+  <% @orders.each do |order| %>
+  <tbody>
+    <tr>
+      <td><%= order.user_id %></td>
+    </tr>
+  </tbody>
+
+  <%end%>
+</table>

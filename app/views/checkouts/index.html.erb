@@ -1,0 +1,50 @@
+<div>
+    <%= link_to 'Keep Shopping', items_path, class: 'btn btn-secondary'%>
+</div>
+
+<p id="notice"><%= notice %></p>
+
+<div class="jumbotron">
+  <h1 class="display-4">  
+  <strong>Checkout
+  </strong>
+</h1>
+
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">quantity</th>
+    </tr>
+  </thead>
+  <% @current_order.line_items.each do |index, cart_item| %>
+  <tbody>
+    <tr>
+      <td><%= cart_item['item']['title'] %></td>
+      <td><%= cart_item['item']['price'] %></td>
+      <td><%= cart_item['item']['quantity']%></td>
+    </tr>
+  </tbody>
+
+  <%end%>
+</table>
+
+
+<section class="section">
+
+  <div class="columns">
+  <div class="column">
+    <%if user_signed_in?%>
+      <%= button_to 'Place Order', checkouts_path, class: "btn btn-info" %>
+    <%end%>
+      <%= link_to 'Empty Cart', class: "btn btn-danger" %>
+    </div>
+    <div class="column total has-text-right">
+    <br >
+      <h4 class="title is-4">
+        <span class="f5 has-text-grey">Total: <%=@current_order.total%> <span class="badge bg-warning">PKR</span> </span>
+      </h4>
+    </div>
+  </div>
+</section>
