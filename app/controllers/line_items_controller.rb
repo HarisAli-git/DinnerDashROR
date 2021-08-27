@@ -21,7 +21,7 @@ class LineItemsController < ApplicationController
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart, notice: 'Item added to cart.' }
+        format.html { redirect_to @line_item.cart, notice: "Item added to cart." }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
@@ -33,7 +33,7 @@ class LineItemsController < ApplicationController
   def update
     respond_to do |format|
       if @line_item.update(line_item_params)
-        format.html { redirect_to @line_item, notice: 'Line item was successfully updated.' }
+        format.html { redirect_to @line_item, notice: "Line item was successfully updated." }
         format.json { render :show, status: :ok, location: @line_item }
       else
         format.html { render :edit }
@@ -48,20 +48,19 @@ class LineItemsController < ApplicationController
     @cart = Cart.find(session[:cart_id])
     @line_item.destroy
     respond_to do |format|
-      format.html { redirect_to cart_path(@cart), notice: 'Item successfully removed.' }
+      format.html { redirect_to cart_path(@cart), notice: "Item successfully removed." }
       format.json { head :no_content }
     end
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_line_item
+      @line_item = LineItem.find(params[:id])
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_line_item
-    @line_item = LineItem.find(params[:id])
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def line_item_params
-    params.require(:line_item).permit(:item_id)
-  end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def line_item_params
+      params.require(:line_item).permit(:item_id)
+    end
 end

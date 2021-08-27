@@ -57,12 +57,11 @@ class ItemsController < ApplicationController
   end
 
   private
+    def item_params
+      params.require(:item).permit(:title, :description, :price, :avatar)
+    end
 
-  def item_params
-    params.require(:item).permit(:title, :description, :price, :avatar)
-  end
-
-  def set_select_collections
-    @categories = Category.all
-  end
+    def set_select_collections
+      @categories = Category.all
+    end
 end

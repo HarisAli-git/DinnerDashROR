@@ -48,8 +48,7 @@ class CategoriesController < ApplicationController
   end
 
   private
-
-  def cat_params
-    params.require(:category).permit(:name)
-  end
+    def cat_params
+      params.require(:category).permit(:name)
+    end
 end

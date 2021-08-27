@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   before_action :load_cart_order
 
   helper_method :c_cart
-  helper_method :current_order
 
   def current_cart
     @current_cart ||= Cart.new(session[:cart])
@@ -25,10 +24,9 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-
-  def configure_permitted_parameters
-    attributes = %i[name username email encrypted_password password_confirmation]
-    devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
-    devise_parameter_sanitizer.permit(:account_update, keys: attributes)
-  end
+    def configure_permitted_parameters
+      attributes = %i[name username email encrypted_password password_confirmation]
+      devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
+      devise_parameter_sanitizer.permit(:account_update, keys: attributes)
+    end
 end

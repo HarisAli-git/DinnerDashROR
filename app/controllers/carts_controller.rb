@@ -18,17 +18,16 @@ class CartsController < ApplicationController
         end
       end
     end
-    session[:order]['items'] = @line_items
+    session[:order]["items"] = @line_items
   end
 
   def destroy
-    item_id = params[:id]
-    @cart.cart_data.delete(item_id)
+    session[:cart] = {}
     redirect_to carts_path
   end
 
   def show
-    @cart = cart
+    @current_cart = current_cart
   end
 
   def add_to_cart
@@ -44,7 +43,7 @@ class CartsController < ApplicationController
 
     respond_to do |format|
       if @cart.save
-        format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
+        format.html { redirect_to @cart, notice: "Cart was successfully created." }
         format.json { render :show, status: :created, location: @cart }
       else
         format.html { render :new }
@@ -56,7 +55,7 @@ class CartsController < ApplicationController
   def update
     respond_to do |format|
       if @cart.update(cart_params)
-        format.html { redirect_to @cart, notice: 'Cart was successfully updated.' }
+        format.html { redirect_to @cart, notice: "Cart was successfully updated." }
         format.json { render :show, status: :ok, location: @cart }
       else
         format.html { render :edit }
@@ -67,16 +66,15 @@ class CartsController < ApplicationController
 
   def invalid_cart
     logger.error "Attempt to access illegal cart #{params[:id]}"
-    redirect_to root_path, notice: 'Invalid Cart Access'
+    redirect_to root_path, notice: "Invalid Cart Access"
   end
 
   private
+    def set_cart
+      @cart = Cart.find(params[:id])
+    end
 
-  def set_cart
-    @cart = Cart.find(params[:id])
-  end
-
-  def cart_params
-    params.fetch(:cart, {})
-  end
+    def cart_params
+      params.fetch(:cart, {})
+    end
 end

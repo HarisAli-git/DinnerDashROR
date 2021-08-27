@@ -37,10 +37,10 @@
 
   <div class="columns">
   <div class="column">
+  <br />
     <%if user_signed_in?%>
       <%= button_to 'Place Order', checkouts_path, class: "btn btn-info" %>
     <%end%>
-      <%= link_to 'Empty Cart', class: "btn btn-danger" %>
     </div>
     <div class="column total has-text-right">
     <br >

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ItemPolicy < ApplicationPolicy
   def new?
     user.is_Admin?
@@ -34,7 +36,6 @@ class ItemPolicy < ApplicationPolicy
     end
 
     private
-
-    attr_reader :user, :scope
+      attr_reader :user, :scope
   end
 end
