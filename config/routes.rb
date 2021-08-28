@@ -2,10 +2,10 @@
 
 Rails.application.routes.draw do
   get "users/index"
-  get "users/show"
   devise_for :users, controller: { registrations: "devise/registrations" }
   get "home/about"
   root "home#index"
+  resources :users
   resources :items
   resources :cart_items
   resources :categories

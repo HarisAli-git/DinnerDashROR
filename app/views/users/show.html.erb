@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<% if @user.id == current_user.id%>
 <div class="jumbotron">
   <h1 class="display-4">  
   <strong>
@@ -7,13 +8,16 @@
   </strong>
 </h1>
   <p class="lead">
-  <%= @item.username %>
+  <%= @user.username %>
   </p>
   <hr class="my-4">
     <%= @user.email %>
   <p>
-    <%= link_to 'Edit Profile',  edit_user_registration, class: "btn btn-primary btn-lg", role: "button" %>
   </div>
+<%else%>
+  YOu dont have persmisson
+<%end%>
+
 </div>
 
 
