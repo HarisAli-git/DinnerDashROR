@@ -22,7 +22,7 @@
       <td><%= @no %></td> 
       <td><%= order.user_id %></td>
       <td>
-        <% if order.status %>
+        <% if order.status == 1 %>
           Order Pending
         <%else%>
           Order Completed

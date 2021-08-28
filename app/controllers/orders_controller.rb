@@ -16,12 +16,11 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
-    if @order.status == true
-      @order.status = 0
+    if @order.status == 1
       @order.update(status: 0)
       redirect_to @order
     else
-      @order.status = true
+      @order.status = 1
       @order.save
       redirect_to @order
     end

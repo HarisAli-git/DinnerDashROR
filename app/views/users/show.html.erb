@@ -3,19 +3,19 @@
 <% if @user.id == current_user.id%>
 <div class="jumbotron">
   <h1 class="display-4">  
-  <strong>
+  Name: <strong>
   <%= @user.name %>
   </strong>
 </h1>
   <p class="lead">
-  <%= @user.username %>
+  Username: <%= @user.username %>
   </p>
   <hr class="my-4">
-    <%= @user.email %>
+  Email:  <%= @user.email %>
   <p>
   </div>
 <%else%>
-  YOu dont have persmisson
+  <p class="display-4">You don't have the required persmissons to view other users data!</p>
 <%end%>
 
 </div>
