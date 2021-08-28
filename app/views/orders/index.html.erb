@@ -12,7 +12,7 @@
       <th scope="col">User id</th>
       <th scope="col">Status</th>
       <th scope="col">View order</th>
-      <th scope="col">Change Status</th>
+      <th scope="col">Order Status</th>
     </tr>
   </thead>
   <%@no = 1%>
@@ -23,9 +23,13 @@
       <td><%= order.user_id %></td>
       <td>
         <% if order.status == 1 %>
-          Order Pending
-        <%else%>
-          Order Completed
+          Ordered
+        <%elsif order.status == 0%>
+          Paid
+        <%elsif order.status == -1%>
+          Cancelled
+        <%elsif order.status == 2%>
+          Completed
         <%end%>
       </td>
       <td><%= link_to 'Show',  order, class: "btn btn-info nt-3"%></td>
