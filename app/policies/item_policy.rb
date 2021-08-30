@@ -21,6 +21,10 @@ class ItemPolicy < ApplicationPolicy
     user.is_Admin?
   end
 
+  def update_status?
+    user.is_Admin?
+  end
+
   class Scope < Scope
     def initialize(user, scope)
       @user = user
@@ -28,8 +32,12 @@ class ItemPolicy < ApplicationPolicy
     end
 
     def resolve
-      if user.is_Admin?
-        scope.all
+      unless user.nil?
+        if user.is_Admin?
+          scope.all
+        else
+          scope.where(flag: true)
+        end
       else
         scope.where(flag: true)
       end

@@ -27,7 +27,9 @@
       <%end%>
     </div>
     <div class="btn-group mr-2" role="group" aria-label="Second group">
+    <%if item.flag%>
       <%= button_to 'Add to Cart', cart_items_path(item_id: item.id), class:"btn btn-secondary" %>
+    <%end%>
     </div>
     </div>
   </div>

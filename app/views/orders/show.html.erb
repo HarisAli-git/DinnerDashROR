@@ -9,8 +9,10 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">Sr. #</th>
-      <th scope="col">Item id</th>
+      <th scope="col">Name</th>
       <th scope="col">Quantity</th>
+      <th scope="col">Price</th>
+      <th scope="col">SubTotal</th>
     </tr>
   </thead>
   <%@no = 1%>
@@ -18,12 +20,15 @@
   <tbody>
     <tr>
       <td><%= @no %></td> 
-      <td><%= line_item.item_id %></td>
+      <td><%= link_to "#{line_item.item.title}", line_item.item, style: "text-decoration: none;"%></td> 
       <td><%= line_item.quantity %></td>
+      <td><%= line_item.item.price %></td>
+      <td><%= line_item.item.price * line_item.quantity%>
     </tr>
   </tbody>
   <%@no += 1%>
   <%end%>
 </table>
-
+<p class="display-6"><strong>Total: </strong><%= @order.total%></p>
+<p class="display-6"><strong>Total: </strong><%= @order.total%></p>
 <%= link_to 'Back', orders_path, class:"btn btn-outline-dark" %>

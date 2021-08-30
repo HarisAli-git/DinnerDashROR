@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :checkouts
   resources :carts
   resources :orders
+  patch "/items/:item_id/update_status" => "items#update_status", as: :update_status
   post "checkouts/index"
   get "admins/index"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

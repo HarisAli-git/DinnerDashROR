@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_action :set_select_collections, only: %i[edit update new create]
 
   def index
-    @items = Item.all
+    @items = policy_scope(Item).all
     @categories = Category.all
   end
 
@@ -37,6 +37,19 @@ class ItemsController < ApplicationController
     @categories = Category.all
   end
 
+  def update_status
+    item = Item.find(params[:item_id].to_i)
+    authorize item
+    unless item.nil?
+      flag = item_params[:flag] != "true"
+      item.flag = flag
+      item.save
+      redirect_to item
+    else
+      render :edit
+    end
+  end
+
   def update
     @item = Item.find(params[:id])
     authorize @item
@@ -58,7 +71,7 @@ class ItemsController < ApplicationController
 
   private
     def item_params
-      params.require(:item).permit(:title, :description, :price, :avatar)
+      params.require(:item).permit(:title, :description, :price, :flag, :avatar)
     end
 
     def set_select_collections
