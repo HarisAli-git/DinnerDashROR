@@ -33,6 +33,7 @@
       <td>
         <%=form_for 'quantity', :url => {:controller => 'cart_items', :action => 'update', item_id: cart_item[:item][:id], id: index }, method: :patch  do |form| %>
         <%= form.number_field cart_item[:quantity], :min => 1, :value => cart_item[:quantity], :class => "qty qty-editable-width", "data-message" => item_id %>
+        <%= form.submit 'Update Quantity', :class => 'btn btn-outline-dark'%>
         <% end %>
       </td>
       <td><%= button_to 'Remove Item', cart_item_path(cart_item[:item][:id]), method: :delete, data: { confirm: "Are you sure? " }, class: 'btn btn-outline-danger' %></td>

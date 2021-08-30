@@ -21,12 +21,12 @@
   <br />
 
   <div class="custom-file"> 
-  <%= form.file_field :avatar, class: "custom-file-input"  %>
+  <%= form.file_field :avatar, class: "btn btn-primary nt-3"  %>
   </div>
 
   <br />
 
   <div class="actions">
-    <%= form.submit%>
+    <%=form.submit 'Submit', :class => 'btn btn-outline-success' %>
   </div>
 <% end %>

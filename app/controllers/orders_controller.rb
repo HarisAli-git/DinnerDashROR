@@ -18,10 +18,14 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     authorize @order
     if @order.status == 1
-      @order.update(status: 0)
+      @order.update(status: 2)
+      redirect_to @order
+    elsif @order.status == 0
+      @order.status = 2
+      @order.save
       redirect_to @order
     else
-      @order.status = 1
+      @order.status = 2
       @order.save
       redirect_to @order
     end

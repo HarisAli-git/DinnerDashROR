@@ -23,14 +23,16 @@ class Cart < ApplicationRecord
     @cart_data[item_id] += 1
   end
 
+  def decrement(item_id)
+    @cart_data[item_id] ||= 0
+    @cart_data[item_id] -= 1
+  end
+
   def destroy
     @cart_data = nil
   end
 
   def delete(item_id)
     @cart_data[:item_id] = 0
-    # for i in 0...@cart_data[item_id]
-    #   @cart_data[item_id] -= 1
-    # end
   end
 end
