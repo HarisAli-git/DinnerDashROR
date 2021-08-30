@@ -16,6 +16,7 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
+    authorize @order
     if @order.status == 1
       @order.update(status: 0)
       redirect_to @order

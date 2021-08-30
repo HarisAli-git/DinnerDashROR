@@ -2,25 +2,20 @@
 
 class ApplicationController < ActionController::Base
   include Pundit
+  attr_reader :cart
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   before_action :current_user
-  before_action :current_cart
+  before_action :load_cart
   before_action :load_cart_order
 
-  helper_method :c_cart
-
-  def current_cart
-    @current_cart ||= Cart.new(session[:cart])
+  def load_cart
+    @cart ||= Cart.new(session[:cart])
   end
 
   def load_cart_order
     session[:order] ||= {}
     @current_order ||= CurrentOrder.new(session[:order])
-  end
-
-  def c_cart
-    @current_cart
   end
 
   protected

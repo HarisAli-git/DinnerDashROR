@@ -2,19 +2,23 @@
 
 class CartItemsController < ApplicationController
   def create
-    @current_cart.increment(params[:item_id])
-    session[:cart] = @current_cart.cart_data
+    @cart.increment(params[:item_id])
+    session[:cart] = @cart.cart_data
     redirect_to items_path
   end
 
   def destroy
-    @current_cart.cart_data.delete
+    @cart.cart_data.delete(params[:id])
     redirect_to carts_path
+    puts "des"*100
+    puts params[:id].inspect
+    # @cart.destroy
+    # session.delete(:cart)
   end
 
   def delete
-    @current_cart.delete(:item_id)
-    redirect_to carts_path
+    # @cart.delete(:item_id)
+    # redirect_to carts_path
   end
 
   def update

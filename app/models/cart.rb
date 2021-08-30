@@ -27,7 +27,10 @@ class Cart < ApplicationRecord
     @cart_data = nil
   end
 
-  def delete
-    @cart_data[item_id] = 0
+  def delete(item_id)
+    @cart_data[:item_id] = 0
+    # for i in 0...@cart_data[item_id]
+    #   @cart_data[item_id] -= 1
+    # end
   end
 end

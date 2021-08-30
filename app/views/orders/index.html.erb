@@ -1,4 +1,4 @@
-
+<%if policy(@orders).index?%>
 <div class="jumbotron">
   <h1 class="display-4">  
   <strong>Orders
@@ -16,6 +16,9 @@
       <th scope="col">Updated At</th>
     </tr>
   </thead>
+
+  
+
   <% @orders.each do |order| %>
   <tbody>
     <tr>
@@ -35,10 +38,13 @@
       </td>
       <td><%= order.created_at %></td>
       <td><%= order.updated_at %></td>
-      <td><%= link_to 'Edit',  edit_order_path(order), class: "btn btn-warning nt-3"%></td>
+      <%if policy(order).update?%>
+        <td><%= link_to 'Edit',  edit_order_path(order), class: "btn btn-warning nt-3"%></td>
+      <%end%>
     </tr>
   </tbody>
   <%end%>
 </table>
 
 <%= link_to 'Back to Admins Panel', admins_index_path, class:"btn btn-outline-dark" %>
+<%end%>
