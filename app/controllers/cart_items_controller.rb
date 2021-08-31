@@ -10,8 +10,6 @@ class CartItemsController < ApplicationController
   def destroy
     @cart.cart_data.delete(params[:id])
     redirect_to carts_path
-    puts "des" * 100
-    puts params[:id].inspect
     # @cart.destroy
     # session.delete(:cart)
   end
@@ -22,13 +20,6 @@ class CartItemsController < ApplicationController
   end
 
   def update
-    # cart = cart_params
-    # item_id = cart[:item_id]
-    # quantity = cart[:quantity]
-    # session[:cart][item_id] = quantity.to_i
-    # session[:order]["items"][item_id]["quantity"] = quantity.to_i
-    # session[:order]["details"] = order_params
-    # render json: { data: item_id }
     puts "=" * 100
     puts params.inspect
     puts params[:item_id]
