@@ -1,7 +1,7 @@
 <h1 class="display-2", style="flex-direction:column; margin: 5px">Items List</h1>
 <%if user_signed_in?%>
   <% if policy(@items).new?%>
-    <%= link_to 'New Item', new_item_path, class:"btn btn-primary btn-lg, margin-top: 20px; margin-left: 50px" %>
+    <%= link_to 'New Item', new_item_path, class:"btn btn-outline-dark btn-lg, margin-top: 20px; margin-left: 50px" %>
   <%end%>
 <%end%>
 <br>
@@ -16,15 +16,22 @@
     <h5 class="card-header text-black"><%=item.title%></h5>
     <p class="card-text"><%= item.categories[0].name %></p>
     <strong><%= item.price %></strong>
-    <div class="btn-group" role="group">
-      <%= link_to 'View', item, class:"btn btn-secondary btn-sm" %>
+    <br />
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group mr-2" role="group" aria-label="First group">  
       <%if user_signed_in?%>
+      <%= link_to 'View', item, class:"btn btn-secondary btn-sm" %>
       <% if policy(item).destroy?%>
         <%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-secondary btn-sm" %>
       <%end%>
       <%end%>
     </div>
+    <div class="btn-group mr-2" role="group" aria-label="Second group">
+    <%if item.flag%>
       <%= button_to 'Add to Cart', cart_items_path(item_id: item.id), class:"btn btn-secondary" %>
+    <%end%>
+    </div>
+    </div>
   </div>
   </div>
 <% end %>

@@ -20,20 +20,23 @@
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Price</th>
-      <th scope="col">quantity</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Delete Item</th>
     </tr>
   </thead>
-  <% @line_items.each do |index, details| %>
+  <% @line_items.each do |index, cart_item| %>
   <tbody>
     <tr>
-        <% item_id = details[:item][:id] %>
-      <td><%= details[:item]['title'] %></td>
-      <td><%= details[:item]['price'] %></td>
+        <% item_id = cart_item[:item][:id] %>
+      <td><%= cart_item[:item]['title'] %></td>
+      <td><%= cart_item[:item]['price'] %></td>
       <td>
-        <%=form_for 'quantity', :url => {:controller => 'cart_items', :action => 'update', item_id: details[:item][:id], id: index }, method: :patch  do |form| %>
-        <%= form.number_field details[:quantity], :min => 1, :value => details[:quantity], :class => "qty qty-editable-width", "data-message" => item_id %>
+        <%=form_for 'quantity', :url => {:controller => 'cart_items', :action => 'update', item_id: cart_item[:item][:id], id: index }, method: :patch  do |form| %>
+        <%= form.number_field cart_item[:quantity], :min => 1, :value => cart_item[:quantity], :class => "qty qty-editable-width", "data-message" => item_id %>
+        <%= form.submit 'Update Quantity', :class => 'btn btn-outline-dark'%>
         <% end %>
       </td>
+      <td><%= button_to 'Remove Item', cart_item_path(cart_item[:item][:id]), method: :delete, data: { confirm: "Are you sure? " }, class: 'btn btn-outline-danger' %></td>
     </tr>
   </tbody>
 
@@ -44,13 +47,15 @@
 <section class="section">
 
   <div class="columns">
-    <div class="column">
-      <%= button_to 'Empty Cart', @cart, method: :delete, data: { confirm: "Are you sure? " }, class: "btn btn-secondary" %>
+  <div class="column">
+    <%if user_signed_in?%>
+      <%= button_to 'Checkout', checkouts_index_path, class: "btn btn-info" %>
+    <%end%>
     </div>
     <div class="column total has-text-right">
     <br >
       <h4 class="title is-4">
-        <span class="f5 has-text-grey">Total:</span>
+        <span class="f5 has-text-grey">Total: <%=@total%> <span class="badge bg-warning">PKR</span> </span>
       </h4>
     </div>
   </div>

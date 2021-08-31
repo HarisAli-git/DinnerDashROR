@@ -11,11 +11,11 @@
     <% @category.each do |cat| %>
       <tr>
         <td><%= cat.name %>
-        <td><%= link_to 'View Items in this category', cat %></td>
+        <td><%= link_to 'View Items in this category', cat, class: "btn btn-outline-secondary nt-3" %></td>
           <%if user_signed_in?%>
             <%if policy(cat).destroy?%>
-              <td><%= link_to 'Edit', edit_category_path(cat) %></td>
-              <td><%= link_to 'Destroy', cat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to 'Edit', edit_category_path(cat), class: "btn btn-outline-info nt-3"  %></td>
+              <td><%= link_to 'Destroy', cat, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger nt-3"  %></td>
              </tr>
             <%end%>
           <% end %>
@@ -31,5 +31,5 @@
   <% end %>
 <%end%>
 
-<%= link_to 'Back', root_path, class:"btn btn-dark" %>
+<%= link_to 'Back to home', root_path, class:"btn btn-dark" %>
 

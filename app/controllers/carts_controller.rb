@@ -1,28 +1,33 @@
+# frozen_string_literal: true
+
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :set_cart, only: %i[show edit update destroy]
 
   def index
     @cart_items = session[:cart]
     @line_items = {}
     @total = 0
+    # if @cart_items.has_key?("item_id")
+    #   @cart_items.delete "item_id"
+    # end
     unless session[:cart].nil?
+      @total = 0
       @cart_items.each do |item_id, quantity|
         item = Item.find_by(id: item_id)
-        @line_items[item_id] = {item: item, quantity: quantity}
+        @line_items[item_id] = { item: item, quantity: quantity }
         if item.flag == true
-            @total = @total + (quantity * item.price)
+          @total += (quantity * item.price)
         else
-            @line_items.delete(item_id)
+          @line_items.delete(item_id)
         end
-    end 
-  end
+      end
+    end
     session[:order]["items"] = @line_items
   end
 
   def destroy
-      item_id = params[:id]
-      @cart.cart_data.delete(item_id)
-      redirect_to carts_path
+    session[:cart] = {}
+    redirect_to carts_path
   end
 
   def show
@@ -42,7 +47,7 @@ class CartsController < ApplicationController
 
     respond_to do |format|
       if @cart.save
-        format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
+        format.html { redirect_to @cart, notice: "Cart was successfully created." }
         format.json { render :show, status: :created, location: @cart }
       else
         format.html { render :new }
@@ -54,7 +59,7 @@ class CartsController < ApplicationController
   def update
     respond_to do |format|
       if @cart.update(cart_params)
-        format.html { redirect_to @cart, notice: 'Cart was successfully updated.' }
+        format.html { redirect_to @cart, notice: "Cart was successfully updated." }
         format.json { render :show, status: :ok, location: @cart }
       else
         format.html { render :edit }
@@ -69,12 +74,11 @@ class CartsController < ApplicationController
   end
 
   private
-  def set_cart
-    @cart = Cart.find(params[:id])
-  end
+    def set_cart
+      @cart = Cart.find(params[:id])
+    end
 
-  def cart_params
-    params.fetch(:cart, {})
-  end
-
+    def cart_params
+      params.fetch(:cart, {})
+    end
 end

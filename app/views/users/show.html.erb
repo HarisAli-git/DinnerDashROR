@@ -1,19 +1,65 @@
 <p id="notice"><%= notice %></p>
 
+<% if @user.id == current_user.id%>
 <div class="jumbotron">
   <h1 class="display-4">  
-  <strong>
+  Name: <strong>
   <%= @user.name %>
   </strong>
 </h1>
   <p class="lead">
-  <%= @item.username %>
+  Username: <%= @user.username %>
   </p>
   <hr class="my-4">
-    <%= @user.email %>
+  Email:  <%= @user.email %>
   <p>
-    <%= link_to 'Edit Profile',  edit_user_registration, class: "btn btn-primary btn-lg", role: "button" %>
   </div>
+  
+<div class="jumbotron">
+  <h1 class="display-4">  
+  <strong>Orders
+  </strong>
+</h1>
+
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Sr. #</th>
+      <th scope="col">Status</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Updated At</th>
+    </tr>
+  </thead>
+  <% @orders.each do |order| %>
+  <tbody>
+    <tr>
+      <td><%= link_to "#{order.id}", order, style: "text-decoration: none"%></td> 
+      <td>
+        <% if order.status == 1 %>
+          Ordered
+        <%elsif order.status == 0%>
+          Paid
+        <%elsif order.status == -1%>
+          Cancelled
+        <%elsif order.status == 2%>
+          Completed
+        <%end%>
+      </td>
+      <td><%= order.created_at %></td>
+      <td><%= order.updated_at %></td>
+      <%if policy(order).update?%>
+        <td><%= link_to 'Edit',  edit_order_path(order), class: "btn btn-warning nt-3"%></td>
+      <%end%>
+    </tr>
+  </tbody>
+  <%end%>
+</table>
+
+<%= link_to 'Home', root_path, class:"btn btn-outline-dark" %>
+<%else%>
+  <p class="display-4">You don't have the required persmissons to view other users data!</p>
+<%end%>
+
 </div>
 
 

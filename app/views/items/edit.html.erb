@@ -1,6 +1,14 @@
-<h1>Editing Item</h1>
+<%if user_signed_in?%>
+    <%if policy(@item).edit?%>
+<h1 class="display-4">Editing Item</h1>
 <br/>
 <%= render 'form', item: @item,  class:"btn btn-primary" %>
 <br/>
 <%= link_to 'Show', @item,  class:"btn btn-secondary" %> |
 <%= link_to 'Back', items_path,  class:"btn btn-secondary" %>
+<%else%>
+  You don't have permission
+    <%end%>
+<%else%>
+  You don't have permission
+<%end%>

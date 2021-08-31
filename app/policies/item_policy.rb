@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ItemPolicy < ApplicationPolicy
   def new?
     user.is_Admin?
@@ -11,7 +13,15 @@ class ItemPolicy < ApplicationPolicy
     user.is_Admin?
   end
 
+  def update?
+    user.is_Admin?
+  end
+
   def destroy?
+    user.is_Admin?
+  end
+
+  def update_status?
     user.is_Admin?
   end
 
@@ -20,14 +30,20 @@ class ItemPolicy < ApplicationPolicy
       @user = user
       @scope = scope
     end
+
     def resolve
-      if user.is_Admin?
-        scope.all
+      unless user.nil?
+        if user.is_Admin?
+          scope.all
+        else
+          scope.where(flag: true)
+        end
       else
         scope.where(flag: true)
       end
     end
+
     private
-    attr_reader :user, :scope
+      attr_reader :user, :scope
   end
 end

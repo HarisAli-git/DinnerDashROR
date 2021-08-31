@@ -2,12 +2,11 @@
   <%if @user.is_Admin%>
     <div class="list-group">
       <div class="list-group-item list-group-item-action active">
-        Admins Actions
+        Admin Dashboard
       </div>
         <%= link_to 'Manage Categories', categories_path, class: "list-group-item list-group-item-action" %>
         <%= link_to 'Manage Items', items_path, class: "list-group-item list-group-item-action" %>
-      <a href="#" class="list-group-item list-group-item-action">View all Oders of the Users</a>      <a href="#" class="list-group-item list-group-item-action">View all Users</a>
-      <a href="#" class="list-group-item list-group-item-action">Change Password</a>
+      <%= link_to 'Manage Orders', orders_path, class: "list-group-item list-group-item-action" %>
     </div>
   <%else%>
     <div>

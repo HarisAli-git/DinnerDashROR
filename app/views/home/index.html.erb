@@ -4,7 +4,9 @@
   <hr class="my-4">
     <%= image_tag('restaurant.jpg', draggable: "true", id: "drag1")%>
   <p>Get Registered and statisfy your cravings now!</p>
+  <%if !user_signed_in?%>
     <%= link_to 'Sign in \ Register', new_user_session_path, class: "btn btn-primary btn-lg", role: "button" %>
+  <%end%>
 </div>
 
 <style>

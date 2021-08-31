@@ -1,5 +1,13 @@
-<h1>Fill the details to Add a New Item</h1>
+<%if user_signed_in?%>
+    <%if policy(@item).new?%>
+    <h1 class="display-4">Fill the details to Add a New Item</h1>
 
-<%= render 'form', item: @item, categories: @categories %>
-<br/>
-<%= link_to 'Back', items_path, class:"btn btn-secondary" %>
+    <%= render 'form', item: @item, categories: @categories %>
+    <br/>
+    <%= link_to 'Back', items_path, class:"btn btn-secondary" %>
+<%else%>
+  You don't have permission
+    <%end%>
+<%else%>
+  You don't have permission
+<%end%>
