@@ -7,7 +7,11 @@ class CartsController < ApplicationController
     @cart_items = session[:cart]
     @line_items = {}
     @total = 0
+    # if @cart_items.has_key?("item_id")
+    #   @cart_items.delete "item_id"
+    # end
     unless session[:cart].nil?
+      @total = 0
       @cart_items.each do |item_id, quantity|
         item = Item.find_by(id: item_id)
         @line_items[item_id] = { item: item, quantity: quantity }
@@ -27,7 +31,7 @@ class CartsController < ApplicationController
   end
 
   def show
-    @current_cart = current_cart
+    @cart = cart
   end
 
   def add_to_cart

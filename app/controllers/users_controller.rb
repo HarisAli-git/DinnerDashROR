@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  def index; end
+  def index
+    user = User.find(params[:id])
+    @orders = @user.orders
+  end
 
-  def show; end
+  def show
+    @user = User.find(params[:id])
+    @orders = @user.orders
+  end
 
   def create
     user = User.create!(user_params)
