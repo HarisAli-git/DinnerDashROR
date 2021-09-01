@@ -1,14 +1,14 @@
 <%if user_signed_in?%>
-    <%if policy(@category).edit?%>
-<h1 class="display-4">Editing Category</h1>
-<br/>
-<%= render 'form', category: @category,  class:"btn btn-primary" %>
-<br/>
-<%= link_to 'Show', @category,  class:"btn btn-secondary" %> |
-<%= link_to 'Back', categories_path,  class:"btn btn-secondary" %>
-<%else%>
-  You don't have permission
-    <%end%>
+  <%if policy(@category).edit?%>
+    <h1 class="display-4">Editing Category</h1>
+    <br/>
+    <%= render 'form', category: @category,  class:"btn btn-primary" %>
+    <br/>
+    <%= link_to 'Show', @category,  class:"btn btn-secondary" %> |
+    <%= link_to 'Back', categories_path,  class:"btn btn-secondary" %>
+  <%else%>
+    You don't have permission
+  <%end%>
 <%else%>
   You don't have permission
 <%end%>

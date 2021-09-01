@@ -1,11 +1,9 @@
 <p id="notice"><%= notice %></p>
-
 <div class="jumbotron">
-  <h1 class="display-4">  
-  <strong>
-  <%= @category.name %>
-  </strong>
-</h1>
-
-<%= render 'browse', items: @items%>
-<%= link_to 'Back', categories_path, class: 'btn btn-outline-dark' %>
+  <h1 class="display-4">
+    <strong>
+      <%= @category.name %>
+    </strong>
+  </h1>
+  <%= render 'browse', items: @items%>
+  <%= link_to 'Back', categories_path, class: 'btn btn-outline-dark' %>

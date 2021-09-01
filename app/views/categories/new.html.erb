@@ -1,13 +1,12 @@
 <%if user_signed_in?%>
-    <%if policy(@category).new?%>
+  <%if policy(@category).new?%>
     <h1 class="display-4">Fill the details to Add a New Category</h1>
-
     <%= render 'form', category: @category %>
     <br/>
     <%= link_to 'Back', categories_path, class:"btn btn-secondary" %>
-    <%else%>
-  You don't have permission
-    <%end%>
+  <%else%>
+    You don't have permission
+  <%end%>
 <%else%>
   You don't have permission
 <%end%>

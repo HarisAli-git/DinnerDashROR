@@ -1,28 +1,79 @@
 <h1 class="display-4">Items in Categories List</h1>
-
 <div class="card-columns". style="display:flex">
-<% items.each do |item| %>
-<div class="card mb-3" style="width: 18rem;flex-direction:column;flex-shrink:none">
-   <p> 
-    <%= image_tag(item.avatar, :class=> "card-img-top", :src=> ".../100px160/", :alt=> "Card image cap")%>
-    </p> 
-  <div class="card-body">
-    <h5 class="card-header text-black"><%=item.title%></h5>
-    <p class="card-text"><%= item.categories[0].name %></p>
-    <strong><%= item.price %></strong>
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group mr-2" role="group" aria-label="First group">  
-     
-      <%= link_to 'View', item, class:"btn btn-secondary btn-sm" %>
-      <%if user_signed_in?%>
-        <% if policy(item).destroy?%>
-            <%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-secondary btn-sm" %>
-        <%end%>
-    <%end%>
+  <% items.each do |item| %>
+    <%if user_signed_in? && current_user.is_Admin?%>
+        <p id="notice"><%= notice %></p>
+        <div class="jumbotron">
+          <h1 class="display-4">
+            <%=item.title%>
+          </h1>
+          <p class="lead">
+            <%= item.description %>
+          </p>
+          <hr class="my-4">
+          <%= image_tag item.avatar, draggable: "true", id: "drag1"%>
+          <p>
+            <strong>Only for:</strong>
+            <%= item.price %> PKR 
+          </p>
+          <p><strong>
+              <%= item.categories[0].name %>
+            </strong></p>
+          <div class="btn-group" role="group">
+            <%if policy(item).edit?%>
+              <%= link_to 'Edit', edit_item_path(item, categories: @categories), class:"btn btn-secondary btn-sm" %>
+              <%= form_with model: item, :url => update_status_path(item.id), method: :patch do |form|%>
+                <%= form.select :flag, [true, false], selected: item.flag%>
+                <%= form.submit 'Change Status', :class => "btn btn-outline-warning" %>
+              </div>
+              <p><strong>Availability: </strong>
+                <%if item.flag?%>
+                  Available
+                <%else%>
+                  Out of Stock
+                <%end%>
+              </p>
+            <%end%>
+          <%else%>
+          <%end%>
+          <%= link_to 'More items', items_path, class: "btn btn-secondary btn-sm", role: "button" %>
+          <%if item.flag%>
+            <%= button_to 'Add to Cart', cart_items_path(item_id: item.id), class:"btn btn-secondary" %>
+          <%end%>
+        </div>
       </div>
+  <%elsif item.flag?%>
+    <p id="notice"><%= notice %></p>
+    <div class="jumbotron">
+      <h1 class="display-4">
+        <%=item.title%>
+      </h1>
+      <p class="lead">
+        <%= item.description %>
+      </p>
+      <hr class="my-4">
+      <%= image_tag item.avatar, draggable: "true", id: "drag1"%>
+      <p>
+        <strong>Only for:</strong>
+        <%= item.price %> PKR 
+      </p>
+      <p><strong><%= item.categories[0].name %></strong></p>
+      <div class="btn-group" role="group">
+      <%= link_to 'More items', items_path, class: "btn btn-secondary btn-sm", role: "button" %>
+      <%if item.flag%>
+        <%= button_to 'Add to Cart', cart_items_path(item_id: item.id), class:"btn btn-secondary" %>
+      <%end%>
     </div>
-      <%= button_to 'Add to Cart', cart_items_path(item_id: item.id), class:"btn btn-secondary" %>
   </div>
-  </div>
+<%else%>
+  This is out of stock item. You cannot view it!
+<%end%>
+<style>
+  #drag1 {
+    margin-bottom: 10px;
+    height: 230px;
+    width: 320px;
+  }
+</style>
 <% end %>
 </div>

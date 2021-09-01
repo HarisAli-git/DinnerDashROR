@@ -1,50 +1,90 @@
-<p id="notice"><%= notice %></p>
-
-<div class="jumbotron">
-  <h1 class="display-4">  
-</h1>
-  <p class="lead">
-  <%= @item.description %>
-  </p>
-  <hr class="my-4">
-    <%= image_tag @item.avatar, draggable: "true", id: "drag1"%>
-  <p>
-  <strong>Only for:</strong>
-  <%= @item.price %> PKR 
-  </p>
-  <p><strong>
-  <%= @item.categories[0].name %>
-  </strong></p>
-  <div class="btn-group" role="group">
-    <%if policy(@item).edit?%>
-      <%= link_to 'Edit', edit_item_path(@item, categories: @categories), class:"btn btn-secondary btn-sm" %>
-    <%= form_with model: @item, :url => update_status_path(@item.id), method: :patch do |form|%>
-    <%= form.select :flag, [true, false], selected: @item.flag%>
-    <%= form.submit 'Change Status', :class => "btn btn-outline-warning" %>
-    </div>
-    <p><strong>Availability: </strong>
-    <%if @item.flag?%>
-      Available
-    <%else%>
-      Out of Stock
-    <%end%>
+<%if policy(@item).edit?%>
+  <p id="notice"><%= notice %></p>
+  <div class="jumbotron">
+    <h1 class="display-4">
+      <%=@item.title%>
+    </h1>
+    <p class="lead">
+      <%= @item.description %>
     </p>
-    <%end%>
+    <hr class="my-4">
+    <%= image_tag @item.avatar, draggable: "true", id: "drag1"%>
+    <p>
+      <strong>Only for:</strong>
+      <%= @item.price %> PKR 
+    </p>
+    <p><strong>
+        <%= @item.categories[0].name %>
+      </strong></p>
+    <div class="btn-group" role="group">
+      <%if policy(@item).edit?%>
+        <%= link_to 'Edit', edit_item_path(@item, categories: @categories), class:"btn btn-secondary btn-sm" %>
+        <%= form_with model: @item, :url => update_status_path(@item.id), method: :patch do |form|%>
+          <%= form.select :flag, [true, false], selected: @item.flag%>
+          <%= form.submit 'Change Status', :class => "btn btn-outline-warning" %>
+        </div>
+        <p><strong>Availability: </strong>
+          <%if @item.flag?%>
+            Available
+          <%else%>
+            Out of Stock
+          <%end%>
+        </p>
+      <%end%>
     <%else%>
-    
-    <%end%>  
-      <%= link_to 'More items', items_path, class: "btn btn-secondary btn-sm", role: "button" %>
-     <%if @item.flag%>
+    <%end%>
+    <%= link_to 'More items', items_path, class: "btn btn-secondary btn-sm", role: "button" %>
+    <%if @item.flag%>
       <%= button_to 'Add to Cart', cart_items_path(item_id: @item.id), class:"btn btn-secondary" %>
     <%end%>
-    </div>
+  </div>
 </div>
-
+<%elsif @item.flag?%>
+  <p id="notice"><%= notice %></p>
+  <div class="jumbotron">
+    <h1 class="display-4">
+      <%=@item.title%>
+    </h1>
+    <p class="lead">
+      <%= @item.description %>
+    </p>
+    <hr class="my-4">
+    <%= image_tag @item.avatar, draggable: "true", id: "drag1"%>
+    <p>
+      <strong>Only for:</strong>
+      <%= @item.price %> PKR 
+    </p>
+    <p><strong><%= @item.categories[0].name %></strong></p>
+    <div class="btn-group" role="group">
+      <%if policy(@item).edit?%>
+        <%= link_to 'Edit', edit_item_path(@item, categories: @categories), class:"btn btn-secondary btn-sm" %>
+        <%= form_with model: @item, :url => update_status_path(@item.id), method: :patch do |form|%>
+          <%= form.select :flag, [true, false], selected: @item.flag%>
+          <%= form.submit 'Change Status', :class => "btn btn-outline-warning" %>
+        </div>
+        <p><strong>Availability: </strong>
+          <%if @item.flag?%>
+            Available
+          <%else%>
+            Out of Stock
+          <%end%>
+        </p>
+      <%end%>
+    <%else%>
+    <%end%>
+    <%= link_to 'More items', items_path, class: "btn btn-secondary btn-sm", role: "button" %>
+    <%if @item.flag%>
+      <%= button_to 'Add to Cart', cart_items_path(item_id: @item.id), class:"btn btn-secondary" %>
+    <%end%>
+  </div>
+</div>
+<%else%>
+  This is out of stock item. You cannot view it!
+<%end%>
 <style>
-#drag1 {
-  margin-bottom: 10px;
-  height: 230px;
-  width: 320px; 
-}
+  #drag1 {
+    margin-bottom: 10px;
+    height: 230px;
+    width: 320px;
+  }
 </style>
-

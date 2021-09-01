@@ -7,32 +7,32 @@
 <br>
 <br>
 <div class="card-columns". style="display:flex">
-<% @items.each do |item| %>
-<div class="card mb-3" style="width: 18rem;flex-direction:column;flex-shrink:none">
-   <p> 
-    <%= image_tag(item.avatar, :class=> "card-img-top", :src=> ".../100px160/", :alt=> "Card image cap")%>
-    </p> 
-  <div class="card-body">
-    <h5 class="card-header text-black"><%=item.title%></h5>
-    <p class="card-text"><%= item.categories[0].name %></p>
-    <strong><%= item.price %></strong>
-    <br />
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group mr-2" role="group" aria-label="First group">  
-      <%if user_signed_in?%>
-      <%= link_to 'View', item, class:"btn btn-secondary btn-sm" %>
-      <% if policy(item).destroy?%>
-        <%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-secondary btn-sm" %>
-      <%end%>
-      <%end%>
+  <% @items.each do |item| %>
+    <div class="card mb-3" style="width: 18rem;flex-direction:column;flex-shrink:none">
+      <p>
+        <%= image_tag(item.avatar, :class=> "card-img-top", :src=> ".../100px160/", :alt=> "Card image cap")%>
+      </p>
+      <div class="card-body">
+        <h5 class="card-header text-black"><%=item.title%></h5>
+        <p class="card-text"><%= item.categories[0].name %></p>
+        <strong><%= item.price %></strong>
+        <br />
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group mr-2" role="group" aria-label="First group">
+            <%if user_signed_in?%>
+              <%= link_to 'View', item, class:"btn btn-secondary btn-sm" %>
+              <% if policy(item).destroy?%>
+                <%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-secondary btn-sm" %>
+              <%end%>
+            <%end%>
+          </div>
+          <div class="btn-group mr-2" role="group" aria-label="Second group">
+            <%if item.flag%>
+              <%= button_to 'Add to Cart', cart_items_path(item_id: item.id), class:"btn btn-secondary" %>
+            <%end%>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="btn-group mr-2" role="group" aria-label="Second group">
-    <%if item.flag%>
-      <%= button_to 'Add to Cart', cart_items_path(item_id: item.id), class:"btn btn-secondary" %>
-    <%end%>
-    </div>
-    </div>
-  </div>
-  </div>
-<% end %>
+  <% end %>
 </div>
