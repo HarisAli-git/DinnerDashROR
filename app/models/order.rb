@@ -3,5 +3,10 @@
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
   belongs_to :user
-  validates :status, presence: true
+  validate :check_status
+
+  private
+    def check_status
+      status in [-1..2]
+    end
 end

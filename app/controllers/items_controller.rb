@@ -20,7 +20,7 @@ class ItemsController < ApplicationController
     @categories = Category.all
     begin
       if !current_user.is_Admin
-        if !@item.flag  
+        if !@item.flag
           respond_to do |format|
             format.html { redirect_to root_path, notice: "This is an out-of-stock item. You don't have permission to view it." }
           end
@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to root_path, notice: "You don't have permission" }
       end
-      return
+      nil
     end
   end
 
@@ -41,7 +41,7 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    begin 
+    begin
       authorize @item
     rescue Pundit::NotAuthorizedError
       respond_to do |format|
@@ -62,13 +62,13 @@ class ItemsController < ApplicationController
   def edit
     @item = Item.find(params[:id])
     @categories = Category.all
-    begin 
+    begin
       authorize @item
     rescue Pundit::NotAuthorizedError
       respond_to do |format|
         format.html { redirect_to root_path, notice: "You don't have permission." }
       end
-      return
+      nil
     end
   end
 

@@ -20,18 +20,15 @@ class CartItemsController < ApplicationController
   end
 
   def update
-    puts "=" * 100
-    puts params.inspect
-    puts params[:item_id]
-    puts "=" * 100
-
-    if params[:quantity].keys[0].to_i < params[:quantity].values[0].to_i
-      (params[:quantity].keys[0].to_i + 1..params[:quantity].values[0].to_i).each do |_i|
+    a = params[:quantity].keys[0].to_i
+    b = params[:quantity].values[0].to_i
+    if  a < b
+      (a...b).each do |_i|
         @cart.increment(params[:item_id])
       end
       redirect_to carts_path
-    elsif params[:quantity].keys[0].to_i > params[:quantity].values[0].to_i
-      (params[:quantity].values[0].to_i + 1..params[:quantity].keys[0].to_i).each do |_i|
+    elsif a > b
+      (b...a).each do |_i|
         @cart.decrement(params[:item_id])
       end
       redirect_to carts_path

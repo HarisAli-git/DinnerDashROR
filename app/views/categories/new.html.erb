@@ -5,8 +5,8 @@
     <br/>
     <%= link_to 'Back', categories_path, class:"btn btn-secondary" %>
   <%else%>
-    You don't have permission
+    <p class="alert alert-danger">You don't have permission</p>
   <%end%>
 <%else%>
-  You don't have permission
+  <p class="alert alert-danger">You don't have permission</p>
 <%end%>

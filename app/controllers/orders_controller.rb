@@ -20,13 +20,13 @@ class OrdersController < ApplicationController
 
   def edit
     @order = Order.find(params[:id])
-    begin 
+    begin
       authorize @order
     rescue Pundit::NotAuthorizedError
       respond_to do |format|
         format.html { redirect_to root_path, notice: "You don't have permission." }
       end
-      return
+      nil
     end
   end
 

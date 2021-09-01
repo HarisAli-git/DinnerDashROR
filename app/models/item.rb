@@ -12,4 +12,5 @@ class Item < ApplicationRecord
   validates :description, length: { minimum: 20 }
   validates :price, presence: true
   validates_associated :item_categories
+  
 end
