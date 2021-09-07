@@ -7,11 +7,27 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    @line_items = @order.line_items
+    if current_user.is_Admin?
+      @line_items = @order.line_items
+    elsif @order.user_id == current_user.id
+      @line_items = @order.line_items
+    else
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "You don't have permission." }
+      end
+    end
   end
 
   def edit
     @order = Order.find(params[:id])
+    begin
+      authorize @order
+    rescue Pundit::NotAuthorizedError
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "You don't have permission." }
+      end
+      nil
+    end
   end
 
   def update

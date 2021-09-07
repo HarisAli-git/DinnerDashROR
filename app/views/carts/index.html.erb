@@ -1,63 +1,54 @@
 <div>
-    <%= link_to 'Keep Shopping', items_path, class: 'btn btn-secondary'%>
+  <%= link_to 'Keep Shopping', items_path, class: 'btn btn-secondary'%>
 </div>
-
 <p id="notice"><%= notice %></p>
-
-
 <% if @line_items.length == 0 %>
   <p class="alert alert-warning">Your Cart is Empty!</p>
 <% else %>
-
-<div class="jumbotron">
-  <h1 class="display-4">  
-  <strong>Cart
-  </strong>
-</h1>
-
-<table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Delete Item</th>
-    </tr>
-  </thead>
-  <% @line_items.each do |index, cart_item| %>
-  <tbody>
-    <tr>
-        <% item_id = cart_item[:item][:id] %>
-      <td><%= cart_item[:item]['title'] %></td>
-      <td><%= cart_item[:item]['price'] %></td>
-      <td>
-        <%=form_for 'quantity', :url => {:controller => 'cart_items', :action => 'update', item_id: cart_item[:item][:id], id: index }, method: :patch  do |form| %>
-        <%= form.number_field cart_item[:quantity], :min => 1, :value => cart_item[:quantity], :class => "qty qty-editable-width", "data-message" => item_id %>
-        <%= form.submit 'Update Quantity', :class => 'btn btn-outline-dark'%>
-        <% end %>
-      </td>
-      <td><%= button_to 'Remove Item', cart_item_path(cart_item[:item][:id]), method: :delete, data: { confirm: "Are you sure? " }, class: 'btn btn-outline-danger' %></td>
-    </tr>
-  </tbody>
-
+  <div class="jumbotron">
+    <h1 class="display-4">
+      <strong>Cart
+      </strong>
+    </h1>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Delete Item</th>
+        </tr>
+      </thead>
+      <% @line_items.each do |index, cart_item| %>
+        <tbody>
+          <tr>
+            <% item_id = cart_item[:item][:id] %>
+            <td><%= cart_item[:item]['title'] %></td>
+            <td><%= cart_item[:item]['price'] %></td>
+            <td>
+              <%=form_for 'quantity', :url => {:controller => 'cart_items', :action => 'update', item_id: cart_item[:item][:id], id: index }, method: :patch  do |form| %>
+                <%= form.number_field cart_item[:quantity], :min => 1, :value => cart_item[:quantity], :class => "qty qty-editable-width", "data-message" => item_id %>
+                <%= form.submit 'Update Quantity', :class => 'btn btn-outline-dark'%>
+              <% end %>
+            </td>
+            <td><%= button_to 'Remove Item', cart_item_path(cart_item[:item][:id]), method: :delete, data: { confirm: "Are you sure? " }, class: 'btn btn-outline-danger' %></td>
+          </tr>
+        </tbody>
+      <%end%>
+    </table>
+    <section class="section">
+      <div class="columns">
+        <div class="column">
+          <%if user_signed_in?%>
+            <%= button_to 'Checkout', checkouts_index_path, class: "btn btn-info" %>
+          <%end%>
+        </div>
+        <div class="column total has-text-right">
+          <br >
+          <h4 class="title is-4">
+            <span class="f5 has-text-grey">Total: <%=@total%> <span class="badge bg-warning">PKR</span> </span>
+          </h4>
+        </div>
+      </div>
+    </section>
   <%end%>
-</table>
-
-
-<section class="section">
-
-  <div class="columns">
-  <div class="column">
-    <%if user_signed_in?%>
-      <%= button_to 'Checkout', checkouts_index_path, class: "btn btn-info" %>
-    <%end%>
-    </div>
-    <div class="column total has-text-right">
-    <br >
-      <h4 class="title is-4">
-        <span class="f5 has-text-grey">Total: <%=@total%> <span class="badge bg-warning">PKR</span> </span>
-      </h4>
-    </div>
-  </div>
-</section>
-<%end%>

@@ -9,8 +9,29 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    begin
+      @item = Item.find(params[:id])
+    rescue NoMethodError
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "This is an out-of-stock item. You don't have permission to view it." }
+      end
+      return
+    end
     @categories = Category.all
+    begin
+      if !current_user.is_Admin
+        if !@item.flag
+          respond_to do |format|
+            format.html { redirect_to root_path, notice: "This is an out-of-stock item. You don't have permission to view it." }
+          end
+        end
+      end
+    rescue NoMethodError
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "You don't have permission" }
+      end
+      nil
+    end
   end
 
   def new
@@ -20,8 +41,14 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-
-    authorize @item
+    begin
+      authorize @item
+    rescue Pundit::NotAuthorizedError
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "You don't have permission." }
+      end
+      return
+    end
     if @item.save
       @item_category = ItemCategory.new(item_id: @item.id, category_id: params[:item][:category_ids])
       @item_category.save
@@ -35,6 +62,14 @@ class ItemsController < ApplicationController
   def edit
     @item = Item.find(params[:id])
     @categories = Category.all
+    begin
+      authorize @item
+    rescue Pundit::NotAuthorizedError
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "You don't have permission." }
+      end
+      nil
+    end
   end
 
   def update_status

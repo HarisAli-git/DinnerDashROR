@@ -1,6 +1,8 @@
-<h1>Editing Order Status</h1>
-<br/>
-<%= render 'form', order: @order %>
-<br/>
-<%= link_to 'Show', @order,  class:"btn btn-secondary" %> |
-<%= link_to 'Back', orders_path,  class:"btn btn-secondary" %>
+<%if user_signed_in?%>
+  <h1>Editing Order Status</h1>
+  <br/>
+  <%= render 'form', order: @order %>
+  <br/>
+  <%= link_to 'Show', @order,  class:"btn btn-secondary" %> |
+  <%= link_to 'Back', orders_path,  class:"btn btn-secondary" %>
+<%end%>
