@@ -7,6 +7,7 @@ class Item < ApplicationRecord
   has_many :line_items
   has_many :carts, through: :line_items
   has_one_attached :avatar
+  validates :avatar, blob: {content_type: {in: 'image/jpg', message: 'Not an image!'}}
 
   validates :title, presence: true, uniqueness: true
   validates :description, length: { minimum: 20 }
